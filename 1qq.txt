@@ -1,0 +1,35 @@
+fYAxisStartPointRawValue = sin((ui16XAxis - 1) * (PI / 180) * ui16Frequency);
+fYAxisStopPointRawValue = sin( ui16XAxis * (PI / 180) * ui16Frequency);
+
+
+
+if((fYAxisStartPointRawValue > 0) && (fYAxisStopPointRawValue > 0))
+{
+    ui16YAxisStartPoint = 120 - abs(fYAxisStartPointRawValue*60);
+    ui16YAxisStopPoint = 120 - abs(fYAxisStopPointRawValue*60);
+}
+if((fYAxisStartPointRawValue > 0) && (fYAxisStopPointRawValue < 0))
+{
+    ui16YAxisStartPoint = 120 - abs(fYAxisStartPointRawValue*60);
+    ui16YAxisStopPoint = 120 + abs(fYAxisStopPointRawValue*60);
+}
+if((fYAxisStartPointRawValue < 0) && (fYAxisStopPointRawValue < 0))
+{
+    ui16YAxisStartPoint = 120 + abs(fYAxisStartPointRawValue*60);
+    ui16YAxisStopPoint = 120 + abs(fYAxisStopPointRawValue*60);
+}
+if((fYAxisStartPointRawValue < 0) && (fYAxisStopPointRawValue > 0))
+{
+    ui16YAxisStartPoint = 120 + abs(fYAxisStartPointRawValue*60);
+    ui16YAxisStopPoint = 120 - abs(fYAxisStopPointRawValue*60);
+}
+//Draw a line between the start point and stop point
+GrContextForegroundSet(&sContext, ClrBlack);
+GrLineDraw(&sContext, ui16XAxis-1, ui16YAxisStartPoint, ui16XAxis,
+ui16YAxisStopPoint);
+
+//Clear the printed point if any
+GrContextForegroundSet(&sContext, ClrWhite);
+GrLineDrawV(&sContext, ui16XAxis+1, 0, 240);
+
+ for(ui16DelayCounter=0; ui16DelayCounter<50000; ui16DelayCounter++);
